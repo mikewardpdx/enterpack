@@ -1,11 +1,12 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const requireContext = require('require-context');
+const rootDir = require('./package.json').rootDir;
 
-const modules = requireContext(path.resolve(__dirname, 'Project'), true, /\main.entry.js$/);
-const entries = () => modules.keys().map(x => `./Project/${x}`);
+const modules = requireContext(path.resolve(__dirname, `${rootDir}`), true, /\main.entry.js$/);
+const entries = () => modules.keys().map(x => `./${rootDir}/${x}`);
 
-module.exports = {
+module.exports = () => ({
   entry: entries,
   output: {
     filename: 'bundle.js',
@@ -34,4 +35,4 @@ module.exports = {
       filename: '[name].css'
     })
   ]
-}
+});
