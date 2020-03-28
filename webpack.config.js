@@ -1,8 +1,12 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const requireContext = require('require-context');
+
+const modules = requireContext(path.resolve(__dirname, 'Project'), true, /\main.entry.js$/);
+const entries = () => modules.keys().map(x => `./Project/${x}`);
 
 module.exports = {
-  entry: './Feature/One/main.entry.js',
+  entry: entries,
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
